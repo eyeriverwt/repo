@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0.1//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" Content="text/html;charset=utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+
+<title>非同期通信テスト</title>
+
+<script type="text/javascript">
+
+var httpRequest;
+
+function resposeTest(){
+  httpRequest = new XMLHttpRequest();
+  httpRequest.overrideMimeType('text/xml');
+  
+  httpRequest.abort();
+  httpRequest.open('GET', 'http://trial.wideshop.jp/nittenv6wt/company.html', true);
+  httpRequest.onreadystatechange = checkStatus;
+
+  httpRequest.send(null);  
+  
+  //xmlHttp.onreadystatechange = checkStatus;
+  //xmlHttp.responseType  = "document"
+  //xmlHttp.onload = function(e){ dom = e.target.responseXML;console.log(e.target.responseXML.title)}
+  //xmlHttp.open("get", "http://www.drk7.jp/weather/xml/13.xml" )
+  //xmlHttp.send()
+  
+}
+
+function checkStatus(){
+  if (httpRequest.readyState == 4 && httpRequest.status == 200){
+    //alert(xmlHttp.responseText);
+    document.getElementById('page_text').value = httpRequest.responseText;
+  }
+}
+
+
+</script>
+
+</head>
+<body>
+
+<h1>非同期通信テスト</h1>
+
+<form>
+<input type="button" value="ファイル読み込み" onClick="resposeTest()">
+</form>
+
+
+<textarea id="page_text" style="width: 100%; height: 200px;"></textarea>
+
+</body>
+</html>
+
+<!--
+http://www.ajaxtower.jp/ini/http/index4.html
+
+
+-->
